@@ -34,17 +34,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        var a: String = ""
-        var b: String = ""
-        var c: String = ""
-        var d: String = ""
-        var e: String = ""
-        var f: String = ""
-        var g: String = ""
-        var v: String = ""
-        var t: String = ""
-        var y: String = ""
-        var numberCounter = 0
         var firstNumber: String = ""
         var secondNumber = ""
         var addCounter = 0
@@ -77,7 +66,6 @@ class MainActivity : AppCompatActivity() {
 
         btnclr!!.setOnClickListener {
             binding.tvResult.text = ""
-            numberCounter = 0
             firstNumber = ""
             secondNumber = ""
             addCounter = 0
@@ -88,19 +76,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnadd!!.setOnClickListener {
-            if(numberCounter>=1) {
-                firstNumber = binding.tvResult.text.toString()
-                firstNumber.toInt()
-                binding.tvResult.text = "+"
-                numberCounter = 0
-                addCounter++
-            }
+            firstNumber = binding.tvResult.text.toString()
+            binding.tvResult.text = "+"
+            addCounter++
+
         }
         btnsub!!.setOnClickListener{
-              if(addCounter>=1) {
-                  binding.tvResult.text = "-"
-                  negCounter++
-              }
+            if(addCounter>=1) {
+                binding.tvResult.text = "-"
+                negCounter++
+            }
             if(subCounter>=1) {
                 binding.tvResult.text = "-"
                 negCounter++
@@ -113,36 +98,32 @@ class MainActivity : AppCompatActivity() {
                 binding.tvResult.text = "-"
                 negCounter++
             }
-            if(numberCounter>=1){
-                firstNumber = binding.tvResult.text.toString()
-                firstNumber.toInt()
-                binding.tvResult.text = "-"
-                numberCounter = 0
-                subCounter++
-            }
+            firstNumber = binding.tvResult.text.toString()
+            binding.tvResult.text = "-"
+            subCounter++
+
         }
         btnmul!!.setOnClickListener{
-            if(numberCounter>=1)
                 firstNumber = binding.tvResult.text.toString()
-                firstNumber.toInt()
                 binding.tvResult.text = "*"
-                numberCounter = 0
                 mulCounter++
         }
         btndiv!!.setOnClickListener{
-            if(numberCounter>=1)
+
                 firstNumber = binding.tvResult.text.toString()
-                firstNumber.toInt()
                 binding.tvResult.text = "/"
-                numberCounter = 0
                 divCounter++
         }
         btneq!!.setOnClickListener {
+            secondNumber = binding.tvResult.text.toString()
+            secondNumber = secondNumber.replace("+","")
+            secondNumber = secondNumber.replace("-","")
+            secondNumber = secondNumber.replace("*","")
+            secondNumber = secondNumber.replace("/","")
             if(addCounter>=1){
-                secondNumber = binding.tvResult.text.toString()
                 var firstInt = firstNumber.toInt()
                 var secondInt = secondNumber.toInt()
-                if(negCounter==1){
+                if(negCounter>=1){
                     var result = firstInt+-secondInt
                     binding.tvResult.text = result.toString()
                 }
@@ -150,13 +131,11 @@ class MainActivity : AppCompatActivity() {
                     var result = firstInt + secondInt
                     binding.tvResult.text = result.toString()
                 }
-
             }
             if(subCounter>=1){
-                secondNumber = binding.tvResult.text.toString()
                 var firstInt = firstNumber.toInt()
                 var secondInt = secondNumber.toInt()
-                if(negCounter==1){
+                if(negCounter>=1){
                     var result = firstInt+secondInt
                     binding.tvResult.text = result.toString()
                 }
@@ -166,10 +145,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             if(mulCounter>=1){
-                secondNumber = binding.tvResult.text.toString()
                 var firstInt = firstNumber.toInt()
                 var secondInt = secondNumber.toInt()
-                if(negCounter==1){
+                if(negCounter>=1){
                     var result = firstInt*-secondInt
                     binding.tvResult.text = result.toString()
                 }
@@ -179,10 +157,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             if(divCounter>=1){
-                secondNumber = binding.tvResult.text.toString()
                 var firstInt = firstNumber.toInt()
                 var secondInt = secondNumber.toInt()
-                if(negCounter==1){
+                if(negCounter>=1){
                     var result = firstInt/-secondInt
                     binding.tvResult.text = result.toString()
                 }
@@ -192,59 +169,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        fun CalculatorType(){
-            when(numberCounter){
-                9->{
-                    binding.tvResult.text=a+b+c+d+e+f+g+v+t+y
-                    numberCounter++
-                }
-                8->{
-                    binding.tvResult.text=a+b+c+d+e+f+g+v+t
-                    numberCounter++
-                }
-                7->{
-                    binding.tvResult.text=a+b+c+d+e+f+g+v
-                    numberCounter++
-                }
-                6->{
-                    binding.tvResult.text=a+b+c+d+e+f+g
-                    numberCounter++
-                }
-                5->{
-                    binding.tvResult.text=a+b+c+d+e+f
-                    numberCounter++
-                }
-                4->{
-                    binding.tvResult.text=a+b+c+d+e
-                    numberCounter++
-                }
-                3->{
-                    binding.tvResult.text=a+b+c+d
-                    numberCounter++
-                }
-                2->{
-                    binding.tvResult.text=a+b+c
-                    numberCounter++
-                }
-                1->{
-                    binding.tvResult.text=a+b
-                    numberCounter++
-                }
-                0->{
-                    binding.tvResult.text=a
-                    numberCounter++
-                }
 
-            }
-        }
 
         // тут мы просто забираем заголовок и добавляем его к TextView
         fun appendStringFromButton(btn: Button) {
             var buttonTitle = btn.getText().toString()
             binding.tvResult.text = binding.tvResult.text.toString().plus(buttonTitle)
         }
-
-//a b c d e f g v t y
 
         // Никит, смотри
         // - тут я отдаю в функцию параметром кнопку, на которую кликнули
