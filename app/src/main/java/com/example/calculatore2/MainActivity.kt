@@ -238,48 +238,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // тут мы просто забираем заголовок и добавляем его к TextView
+        fun appendStringFromButton(btn: Button) {
+            var buttonTitle = btn.getText().toString()
+            binding.tvResult.text = binding.tvResult.text.toString().plus(buttonTitle)
+        }
+
 //a b c d e f g v t y
 
-        btnone!!.setOnClickListener {
-            a="1"; b="1"; c="1"; d="1"; e="1"; f="1"; g="1"; v="1";t="1";y="1"
-            CalculatorType()
-        }
-        btntwo!!.setOnClickListener {
-            a="2"; b="2"; c="2"; d="2"; e="2"; f="2"; g="2"; v="2";t="2";y="2"
-            CalculatorType()
-        }
-        btnthree!!.setOnClickListener {
-            a="3"; b="3"; c="3"; d="3"; e="3"; f="3"; g="3"; v="3";t="3";y="3"
-            CalculatorType()
-        }
-        btnfour!!.setOnClickListener {
-            a="4"; b="4"; c="4"; d="4"; e="4"; f="4"; g="4"; v="4";t="4";y="4"
-            CalculatorType()
-        }
-        btnfive!!.setOnClickListener {
-            a="5"; b="5"; c="5"; d="5"; e="5"; f="5"; g="5"; v="5";t="5";y="5"
-            CalculatorType()
-        }
-        btnsix!!.setOnClickListener {
-            a="6"; b="6"; c="6"; d="6"; e="6"; f="6"; g="6"; v="6";t="6";y="6"
-            CalculatorType()
-        }
-        btnseven!!.setOnClickListener {
-            a="7"; b="7"; c="7"; d="7"; e="7"; f="7"; g="7"; v="7";t="7";y="7"
-            CalculatorType()
-        }
-        btneight!!.setOnClickListener {
-            a="8"; b="8"; c="8"; d="8"; e="8"; f="8"; g="8"; v="8";t="8";y="8"
-            CalculatorType()
-        }
-        btnnine!!.setOnClickListener {
-            a="9"; b="9"; c="9"; d="9"; e="9"; f="9"; g="9"; v="9";t="9";y="9"
-            CalculatorType()
-        }
-        btnzero!!.setOnClickListener {
-            if(numberCounter>=1)
-                b="0"; c="0"; d="0"; e="0"; f="0"; g="0"; v="0";t="0";y="0"
-                CalculatorType()
-        }
+        // Никит, смотри
+        // - тут я отдаю в функцию параметром кнопку, на которую кликнули
+        // - и уже там из этой кнопки достаю ее title, его добавляю в TextView
+        // - таким образом наш код универсальнее и унифицированнее получился
+        btnone!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
+        btntwo!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
+        btnthree!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
+        btnfour!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
+        btnfive!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
+        btnsix!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
+        btnseven!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
+        btneight!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
+        btnnine!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
+        btnzero!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
     }
 }
