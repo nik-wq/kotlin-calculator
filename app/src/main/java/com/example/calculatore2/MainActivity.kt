@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calculatore2.databinding.ActivityMainBinding
 
@@ -36,11 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         var firstNumber: String = ""
         var secondNumber = ""
-        var addCounter = 0
-        var subCounter = 0
-        var divCounter = 0
-        var mulCounter = 0
-        var negCounter = 0
+        var ac = ""
 
 
         btnadd = findViewById<View>(R.id.btPlus) as Button
@@ -68,103 +65,64 @@ class MainActivity : AppCompatActivity() {
             binding.tvResult.text = ""
             firstNumber = ""
             secondNumber = ""
-            addCounter = 0
-            mulCounter = 0
-            subCounter = 0
-            divCounter = 0
-            negCounter = 0
+            ac = ""
         }
 
         btnadd!!.setOnClickListener {
             firstNumber = binding.tvResult.text.toString()
             binding.tvResult.text = "+"
-            addCounter++
+            ac = "+"
 
         }
         btnsub!!.setOnClickListener{
-            if(addCounter>=1) {
-                binding.tvResult.text = "-"
-                negCounter++
-            }
-            if(subCounter>=1) {
-                binding.tvResult.text = "-"
-                negCounter++
-            }
-            if(mulCounter>=1) {
-                binding.tvResult.text = "-"
-                negCounter++
-            }
-            if(divCounter>=1) {
-                binding.tvResult.text = "-"
-                negCounter++
-            }
             firstNumber = binding.tvResult.text.toString()
             binding.tvResult.text = "-"
-            subCounter++
+            ac = "-"
 
         }
         btnmul!!.setOnClickListener{
                 firstNumber = binding.tvResult.text.toString()
                 binding.tvResult.text = "*"
-                mulCounter++
+                ac = "*"
         }
         btndiv!!.setOnClickListener{
-
                 firstNumber = binding.tvResult.text.toString()
                 binding.tvResult.text = "/"
-                divCounter++
+                ac = "/"
         }
         btneq!!.setOnClickListener {
             secondNumber = binding.tvResult.text.toString()
-            secondNumber = secondNumber.replace("+","")
-            secondNumber = secondNumber.replace("-","")
-            secondNumber = secondNumber.replace("*","")
-            secondNumber = secondNumber.replace("/","")
-            if(addCounter>=1){
+            secondNumber = secondNumber.replace("+", "")
+            secondNumber = secondNumber.replace("-", "")
+            secondNumber = secondNumber.replace("*", "")
+            secondNumber = secondNumber.replace("/", "")
+            if (ac.contains("+")){
                 var firstInt = firstNumber.toInt()
                 var secondInt = secondNumber.toInt()
-                if(negCounter>=1){
-                    var result = firstInt+-secondInt
-                    binding.tvResult.text = result.toString()
-                }
-                else{
-                    var result = firstInt + secondInt
-                    binding.tvResult.text = result.toString()
-                }
+                var result = firstInt + secondInt
+                binding.tvResult.text = result.toString()
             }
-            if(subCounter>=1){
+            if (ac.contains("-")) {
                 var firstInt = firstNumber.toInt()
                 var secondInt = secondNumber.toInt()
-                if(negCounter>=1){
-                    var result = firstInt+secondInt
-                    binding.tvResult.text = result.toString()
-                }
-                else{
-                    var result = firstInt-secondInt
-                    binding.tvResult.text = result.toString()
-                }
+                var result = firstInt - secondInt
+                binding.tvResult.text = result.toString()
             }
-            if(mulCounter>=1){
+            if (ac.contains("*")) {
                 var firstInt = firstNumber.toInt()
                 var secondInt = secondNumber.toInt()
-                if(negCounter>=1){
-                    var result = firstInt*-secondInt
-                    binding.tvResult.text = result.toString()
-                }
-                else{
-                    var result = firstInt * secondInt
-                    binding.tvResult.text = result.toString()
-                }
+                var result = firstInt * secondInt
+                binding.tvResult.text = result.toString()
             }
-            if(divCounter>=1){
+            if (ac.contains("/")) {
                 var firstInt = firstNumber.toInt()
                 var secondInt = secondNumber.toInt()
-                if(negCounter>=1){
-                    var result = firstInt/-secondInt
-                    binding.tvResult.text = result.toString()
-                }
-                else{
+                if(secondInt!=0&&firstInt!=0) {
                     var result = firstInt / secondInt
+                    binding.tvResult.text = result.toString()
+                }
+                else{
+                    var result = 0
                     binding.tvResult.text = result.toString()
                 }
             }
@@ -174,7 +132,12 @@ class MainActivity : AppCompatActivity() {
         // тут мы просто забираем заголовок и добавляем его к TextView
         fun appendStringFromButton(btn: Button) {
             var buttonTitle = btn.getText().toString()
-            binding.tvResult.text = binding.tvResult.text.toString().plus(buttonTitle)
+            binding.tvResult.text = binding.tvResult.text.toString()
+                .replace("+","")
+                .replace("-","")
+                .replace("*","")
+                .replace("/","")
+                .plus(buttonTitle)
         }
 
         // Никит, смотри
