@@ -139,9 +139,9 @@ class MainActivity : AppCompatActivity() {
         }
         btneq!!.setOnClickListener {
             if(addCounter>=1){
-                    secondNumber = binding.tvResult.text.toString()
-                    var firstInt = firstNumber.toInt()
-                    var secondInt = secondNumber.toInt()
+                secondNumber = binding.tvResult.text.toString()
+                var firstInt = firstNumber.toInt()
+                var secondInt = secondNumber.toInt()
                 if(negCounter==1){
                     var result = firstInt+-secondInt
                     binding.tvResult.text = result.toString()
@@ -192,533 +192,94 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        fun CalculatorType(){
+            when(numberCounter){
+                9->{
+                    binding.tvResult.text=a+b+c+d+e+f+g+v+t+y
+                    numberCounter++
+                }
+                8->{
+                    binding.tvResult.text=a+b+c+d+e+f+g+v+t
+                    numberCounter++
+                }
+                7->{
+                    binding.tvResult.text=a+b+c+d+e+f+g+v
+                    numberCounter++
+                }
+                6->{
+                    binding.tvResult.text=a+b+c+d+e+f+g
+                    numberCounter++
+                }
+                5->{
+                    binding.tvResult.text=a+b+c+d+e+f
+                    numberCounter++
+                }
+                4->{
+                    binding.tvResult.text=a+b+c+d+e
+                    numberCounter++
+                }
+                3->{
+                    binding.tvResult.text=a+b+c+d
+                    numberCounter++
+                }
+                2->{
+                    binding.tvResult.text=a+b+c
+                    numberCounter++
+                }
+                1->{
+                    binding.tvResult.text=a+b
+                    numberCounter++
+                }
+                0->{
+                    binding.tvResult.text=a
+                    numberCounter++
+                }
 
+            }
+        }
 
+//a b c d e f g v t y
 
         btnone!!.setOnClickListener {
-
-            if(numberCounter == 9) {
-            y = "1"
-            binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"+"$y"
-            numberCounter++
-        }
-            if(numberCounter == 8) {
-                t = "1"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"
-                numberCounter++
-            }
-            if(numberCounter == 7) {
-                v = "1"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"
-                numberCounter++
-            }
-            if(numberCounter == 6) {
-                g = "1"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"
-                numberCounter++
-            }
-            if(numberCounter == 5) {
-                f = "1"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e" + "$f"
-                numberCounter++
-            }
-            if(numberCounter == 4) {
-                e="1"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e"
-                numberCounter++
-            }
-            if(numberCounter == 3){
-                d="1"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d"
-                numberCounter++
-            }
-
-            if (numberCounter == 2) {
-                c = "1"
-                binding.tvResult.text = "$a" + "$b" + "$c"
-                numberCounter++
-            }
-            if (numberCounter == 1) {
-                b = "1"
-                binding.tvResult.text = "$a" + "$b"
-                numberCounter++
-            }
-            if (numberCounter == 0) {
-                a = "1"
-                binding.tvResult.text = "$a"
-                numberCounter++
-            }
-
-
+            a="1"; b="1"; c="1"; d="1"; e="1"; f="1"; g="1"; v="1";t="1";y="1"
+            CalculatorType()
         }
         btntwo!!.setOnClickListener {
-            if(numberCounter == 9) {
-                y = "2"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"+"$y"
-                numberCounter++
-            }
-            if(numberCounter == 8) {
-                t = "2"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"
-                numberCounter++
-            }
-            if(numberCounter == 7) {
-                v = "2"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"
-                numberCounter++
-            }
-            if(numberCounter == 6) {
-                g = "2"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"
-                numberCounter++
-            }
-            if(numberCounter == 5) {
-                f = "2"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e" + "$f"
-                numberCounter++
-            }
-            if(numberCounter == 4) {
-                e="2"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e"
-                numberCounter++
-            }
-            if(numberCounter == 3){
-                d="2"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d"
-                numberCounter++
-            }
-            if (numberCounter == 2) {
-                c = "2"
-                binding.tvResult.text = "$a" + "$b" + "$c"
-                numberCounter++
-            }
-            if (numberCounter == 1) {
-                b = "2"
-                binding.tvResult.text = "$a" + "$b"
-                numberCounter++
-            }
-            if (numberCounter == 0) {
-                a = "2"
-                binding.tvResult.text = "$a"
-                numberCounter++
-            }
-
+            a="2"; b="2"; c="2"; d="2"; e="2"; f="2"; g="2"; v="2";t="2";y="2"
+            CalculatorType()
         }
         btnthree!!.setOnClickListener {
-            if(numberCounter == 9) {
-                y = "3"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"+"$y"
-                numberCounter++
-            }
-            if(numberCounter == 8) {
-                t = "3"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"
-                numberCounter++
-            }
-            if(numberCounter == 7) {
-                v = "3"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"
-                numberCounter++
-            }
-            if(numberCounter == 6) {
-                g = "3"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"
-                numberCounter++
-            }
-            if(numberCounter == 5) {
-                f = "3"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e" + "$f"
-                numberCounter++
-            }
-            if(numberCounter == 4) {
-                e="3"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e"
-                numberCounter++
-            }
-            if(numberCounter == 3){
-                d="3"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d"
-                numberCounter++
-            }
-            if (numberCounter == 2) {
-                c = "3"
-                binding.tvResult.text = "$a" + "$b" + "$c"
-                numberCounter++
-            }
-            if (numberCounter == 1) {
-                b = "3"
-                binding.tvResult.text = "$a" + "$b"
-                numberCounter++
-            }
-            if (numberCounter == 0) {
-                a = "3"
-                binding.tvResult.text = "$a"
-                numberCounter++
-            }
-
+            a="3"; b="3"; c="3"; d="3"; e="3"; f="3"; g="3"; v="3";t="3";y="3"
+            CalculatorType()
         }
         btnfour!!.setOnClickListener {
-            //a,b,c,d,e,f,g,v,t,y
-            if(numberCounter == 9) {
-                y = "4"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"+"$y"
-                numberCounter++
-            }
-            if(numberCounter == 8) {
-                t = "4"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"
-                numberCounter++
-            }
-            if(numberCounter == 7) {
-                v = "4"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"
-                numberCounter++
-            }
-            if(numberCounter == 6) {
-                g = "4"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"
-                numberCounter++
-            }
-            if(numberCounter == 5) {
-                f = "4"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e" + "$f"
-                numberCounter++
-            }
-            if(numberCounter == 4) {
-                e="4"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e"
-                numberCounter++
-            }
-            if(numberCounter == 3){
-                d="4"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d"
-                numberCounter++
-            }
-            if(numberCounter == 2){
-                c="4"
-                binding.tvResult.text = "$a" + "$b" + "$c"
-                numberCounter++
-            }
-            if(numberCounter == 1){
-                b="4"
-                binding.tvResult.text = "$a" + "$b"
-                numberCounter++
-            }
-            if(numberCounter == 0){
-                a="4"
-                binding.tvResult.text = "$a"
-                numberCounter++
-            }
-
+            a="4"; b="4"; c="4"; d="4"; e="4"; f="4"; g="4"; v="4";t="4";y="4"
+            CalculatorType()
         }
         btnfive!!.setOnClickListener {
-            if(numberCounter == 9) {
-                y = "5"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"+"$y"
-                numberCounter++
-            }
-            if(numberCounter == 8) {
-                t = "5"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"
-                numberCounter++
-            }
-            if(numberCounter == 7) {
-                v = "5"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"
-                numberCounter++
-            }
-            if(numberCounter == 6) {
-                g = "5"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"
-                numberCounter++
-            }
-            if(numberCounter == 5) {
-                f = "5"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e" + "$f"
-                numberCounter++
-            }
-            if(numberCounter == 4) {
-                e="5"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e"
-                numberCounter++
-            }
-            if(numberCounter == 3){
-                d="5"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d"
-                numberCounter++
-            }
-            if(numberCounter == 2){
-                c="5"
-                binding.tvResult.text = "$a" + "$b" + "$c"
-                numberCounter++
-            }
-            if(numberCounter == 1){
-                b="5"
-                binding.tvResult.text = "$a" + "$b"
-                numberCounter++
-            }
-            if(numberCounter == 0){
-                a="5"
-                binding.tvResult.text = "$a"
-                numberCounter++
-            }
-
+            a="5"; b="5"; c="5"; d="5"; e="5"; f="5"; g="5"; v="5";t="5";y="5"
+            CalculatorType()
         }
         btnsix!!.setOnClickListener {
-            if(numberCounter == 9) {
-                y = "6"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"+"$y"
-                numberCounter++
-            }
-            if(numberCounter == 8) {
-                t = "6"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"
-                numberCounter++
-            }
-            if(numberCounter == 7) {
-                v = "6"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"
-                numberCounter++
-            }
-            if(numberCounter == 6) {
-                g = "6"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"
-                numberCounter++
-            }
-            if(numberCounter == 5) {
-                f = "6"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e" + "$f"
-                numberCounter++
-            }
-            if(numberCounter == 4) {
-                e="6"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e"
-                numberCounter++
-            }
-            if(numberCounter == 3){
-                d="6"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d"
-                numberCounter++
-            }
-            if(numberCounter == 2){
-                c="6"
-                binding.tvResult.text = "$a" + "$b" + "$c"
-                numberCounter++
-            }
-            if(numberCounter == 1){
-                b="6"
-                binding.tvResult.text = "$a" + "$b"
-                numberCounter++
-            }
-            if(numberCounter == 0){
-                a="6"
-                binding.tvResult.text = "$a"
-                numberCounter++
-            }
+            a="6"; b="6"; c="6"; d="6"; e="6"; f="6"; g="6"; v="6";t="6";y="6"
+            CalculatorType()
         }
         btnseven!!.setOnClickListener {
-            if(numberCounter == 9) {
-                y = "7"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"+"$y"
-                numberCounter++
-            }
-            if(numberCounter == 8) {
-                t = "7"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"
-                numberCounter++
-            }
-            if(numberCounter == 7) {
-                v = "7"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"
-                numberCounter++
-            }
-            if(numberCounter == 6) {
-                g = "7"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"
-                numberCounter++
-            }
-            if(numberCounter == 5) {
-                f = "7"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e" + "$f"
-                numberCounter++
-            }
-            if(numberCounter == 4) {
-                e="7"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e"
-                numberCounter++
-            }
-            if(numberCounter == 3){
-                d="7"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d"
-                numberCounter++
-            }
-            if(numberCounter == 2){
-                c="7"
-                binding.tvResult.text = "$a" + "$b" + "$c"
-                numberCounter++
-            }
-            if(numberCounter == 1){
-                b="7"
-                binding.tvResult.text = "$a" + "$b"
-                numberCounter++
-            }
-            if(numberCounter == 0){
-                a="7"
-                binding.tvResult.text = "$a"
-                numberCounter++
-            }
+            a="7"; b="7"; c="7"; d="7"; e="7"; f="7"; g="7"; v="7";t="7";y="7"
+            CalculatorType()
         }
         btneight!!.setOnClickListener {
-            if(numberCounter == 9) {
-                y = "8"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"+"$y"
-                numberCounter++
-            }
-            if(numberCounter == 8) {
-                t = "8"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"
-                numberCounter++
-            }
-            if(numberCounter == 7) {
-                v = "8"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"
-                numberCounter++
-            }
-            if(numberCounter == 6) {
-                g = "8"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"
-                numberCounter++
-            }
-            if(numberCounter == 5) {
-                f = "8"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e" + "$f"
-                numberCounter++
-            }
-            if(numberCounter == 4) {
-                e="8"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e"
-                numberCounter++
-            }
-            if(numberCounter == 3){
-                d="8"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d"
-                numberCounter++
-            }
-            if(numberCounter == 2){
-                c="8"
-                binding.tvResult.text = "$a" + "$b" + "$c"
-                numberCounter++
-            }
-            if(numberCounter == 1){
-                b="8"
-                binding.tvResult.text = "$a" + "$b"
-                numberCounter++
-            }
-            if(numberCounter == 0){
-                a="8"
-                binding.tvResult.text = "$a"
-                numberCounter++
-            }
+            a="8"; b="8"; c="8"; d="8"; e="8"; f="8"; g="8"; v="8";t="8";y="8"
+            CalculatorType()
         }
         btnnine!!.setOnClickListener {
-            if(numberCounter == 9) {
-                y = "9"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"+"$y"
-                numberCounter++
-            }
-            if(numberCounter == 8) {
-                t = "9"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"
-                numberCounter++
-            }
-            if(numberCounter == 7) {
-                v = "9"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"
-                numberCounter++
-            }
-            if(numberCounter == 6) {
-                g = "9"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"
-                numberCounter++
-            }
-            if(numberCounter == 5) {
-                f = "9"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e" + "$f"
-                numberCounter++
-            }
-            if(numberCounter == 4) {
-                e="9"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e"
-                numberCounter++
-            }
-            if(numberCounter == 3){
-                d="9"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d"
-                numberCounter++
-            }
-            if(numberCounter == 2){
-                c="9"
-                binding.tvResult.text = "$a" + "$b" + "$c"
-                numberCounter++
-            }
-            if(numberCounter == 1){
-                b="9"
-                binding.tvResult.text = "$a" + "$b"
-                numberCounter++
-            }
-            if(numberCounter == 0){
-                a="9"
-                binding.tvResult.text = "$a"
-                numberCounter++
-            }
+            a="9"; b="9"; c="9"; d="9"; e="9"; f="9"; g="9"; v="9";t="9";y="9"
+            CalculatorType()
         }
         btnzero!!.setOnClickListener {
-            if(numberCounter == 9) {
-                y = "0"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"+"$y"
-                numberCounter++
-            }
-            if(numberCounter == 8) {
-                t = "0"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"+"$t"
-                numberCounter++
-            }
-            if(numberCounter == 7) {
-                v = "0"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"+"$v"
-                numberCounter++
-            }
-            if(numberCounter == 6) {
-                g = "0"
-                binding.tvResult.text = "$a"+"$b"+"$c"+"$d"+"$e"+"$f"+"$g"
-                numberCounter++
-            }
-            if(numberCounter == 5) {
-                f = "0"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e" + "$f"
-                numberCounter++
-            }
-            if(numberCounter == 4) {
-                e="0"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d" + "$e"
-                numberCounter++
-            }
-            if(numberCounter == 3){
-                d="0"
-                binding.tvResult.text = "$a" + "$b" + "$c" + "$d"
-                numberCounter++
-            }
-            if(numberCounter == 2){
-                c="0"
-                binding.tvResult.text = "$a" + "$b" + "$c"
-                numberCounter++
-            }
-            if(numberCounter == 1){
-                b="0"
-                binding.tvResult.text = "$a" + "$b"
-                numberCounter++
-            }
-
+            if(numberCounter>=1)
+                b="0"; c="0"; d="0"; e="0"; f="0"; g="0"; v="0";t="0";y="0"
+                CalculatorType()
         }
     }
 }
