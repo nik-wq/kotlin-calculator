@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calculatore2.databinding.ActivityMainBinding
 
@@ -75,6 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         btnsub!!.setOnClickListener{
+
             firstNumber = binding.tvResult.text.toString()
             binding.tvResult.text = "-"
             ac = "-"
@@ -117,16 +117,20 @@ class MainActivity : AppCompatActivity() {
             if (ac.contains("/")) {
                 var firstInt = firstNumber.toInt()
                 var secondInt = secondNumber.toInt()
-                if(secondInt!=0&&firstInt!=0) {
-                    var result = firstInt / secondInt
-                    binding.tvResult.text = result.toString()
-                }
-                else{
-                    var result = 0
-                    binding.tvResult.text = result.toString()
-                }
+                var result = firstInt / secondInt
+                binding.tvResult.text = result.toString()
             }
         }
+
+        fun operationSelected(btn: Button){
+            firstNumber = binding.tvResult.text.toString()
+            ac = btn.getText().toString()
+        }
+
+        btnadd!!.setOnClickListener{ v -> operationSelected(v as Button)}
+        btnsub!!.setOnClickListener{ v -> operationSelected(v as Button)}
+        btnmul!!.setOnClickListener{ v -> operationSelected(v as Button)}
+        btndiv!!.setOnClickListener{ v -> operationSelected(v as Button)}
 
 
         // тут мы просто забираем заголовок и добавляем его к TextView
