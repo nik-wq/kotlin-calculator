@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.trimmedLength
 import com.example.calculatore2.databinding.ActivityMainBinding
 
 
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        var firstNumber: String = ""
+        var firstNumber = ""
         var secondNumber = ""
         var ac = ""
 
@@ -64,68 +65,48 @@ class MainActivity : AppCompatActivity() {
             binding.tvResult.text = ""
             firstNumber = ""
             secondNumber = ""
-            ac = ""
+            ac = "".take(1)
         }
 
-        btnadd!!.setOnClickListener {
-            firstNumber = binding.tvResult.text.toString()
-            binding.tvResult.text = "+"
-            ac = "+"
-
-        }
-        btnsub!!.setOnClickListener{
-
-            firstNumber = binding.tvResult.text.toString()
-            binding.tvResult.text = "-"
-            ac = "-"
-
-        }
-        btnmul!!.setOnClickListener{
-                firstNumber = binding.tvResult.text.toString()
-                binding.tvResult.text = "*"
-                ac = "*"
-        }
-        btndiv!!.setOnClickListener{
-                firstNumber = binding.tvResult.text.toString()
-                binding.tvResult.text = "/"
-                ac = "/"
-        }
+        
         btneq!!.setOnClickListener {
             secondNumber = binding.tvResult.text.toString()
+            var result = 0
             secondNumber = secondNumber.replace("+", "")
             secondNumber = secondNumber.replace("-", "")
             secondNumber = secondNumber.replace("*", "")
             secondNumber = secondNumber.replace("/", "")
+
+            var firstInt = firstNumber.toInt()
+            var secondInt = secondNumber.toInt()
             if (ac.contains("+")){
-                var firstInt = firstNumber.toInt()
-                var secondInt = secondNumber.toInt()
-                var result = firstInt + secondInt
-                binding.tvResult.text = result.toString()
+                result = firstInt + secondInt
             }
             if (ac.contains("-")) {
-                var firstInt = firstNumber.toInt()
-                var secondInt = secondNumber.toInt()
-                var result = firstInt - secondInt
-                binding.tvResult.text = result.toString()
+                result = firstInt - secondInt
             }
             if (ac.contains("*")) {
-                var firstInt = firstNumber.toInt()
-                var secondInt = secondNumber.toInt()
-                var result = firstInt * secondInt
-                binding.tvResult.text = result.toString()
+                result = firstInt * secondInt
             }
             if (ac.contains("/")) {
-                var firstInt = firstNumber.toInt()
-                var secondInt = secondNumber.toInt()
-                var result = firstInt / secondInt
-                binding.tvResult.text = result.toString()
+                if(firstNumber!="0"&&secondNumber!="0") {
+                    result = firstInt / secondInt
+                }
+                else{
+                    result = 0
+                }
             }
+            binding.tvResult.text = result.toString()
         }
 
         fun operationSelected(btn: Button){
             firstNumber = binding.tvResult.text.toString()
             ac = btn.getText().toString()
+            if(firstNumber!=""){
+                binding.tvResult.text = ac
+            }
         }
+
 
         btnadd!!.setOnClickListener{ v -> operationSelected(v as Button)}
         btnsub!!.setOnClickListener{ v -> operationSelected(v as Button)}
