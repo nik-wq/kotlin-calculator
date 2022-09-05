@@ -35,6 +35,20 @@ class MainActivity : AppCompatActivity() {
     private var ac = ""
     private var didSelectOperation = false
 
+    // тут мы просто забираем заголовок и добавляем его к TextView
+    fun appendStringFromButton(btn: Button) {
+        if (didSelectOperation) {
+            binding.tvResult.text = ""
+            didSelectOperation = false
+        }
+
+        var buttonTitle = btn.getText().toString()
+
+        // supress multiple 000.. and 01, etc
+        var resultString = binding.tvResult.text.toString().plus(buttonTitle).toInt().toString()
+        binding.tvResult.text = resultString
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -50,17 +64,11 @@ class MainActivity : AppCompatActivity() {
         btnclr = findViewById<View>(R.id.btClear) as Button
 
 
-        btnone = findViewById<View>(R.id.btOne) as Button
-        btntwo = findViewById<View>(R.id.btTwo) as Button
-        btnthree = findViewById<View>(R.id.btThree) as Button
-        btnfour = findViewById<View>(R.id.btFour) as Button
-        btnfive = findViewById<View>(R.id.btFive) as Button
-        btnsix = findViewById<View>(R.id.btSix) as Button
-        btnseven = findViewById<View>(R.id.btSeven) as Button
-        btneight = findViewById<View>(R.id.btEight) as Button
-        btnnine = findViewById<View>(R.id.btNine) as Button
-        btnzero = findViewById<View>(R.id.btZero) as Button
-
+        // setup digits listener
+        for (btnId in arrayOf(R.id.btOne, R.id.btTwo, R.id.btThree, R.id.btFour, R.id.btFive, R.id.btSix, R.id.btSeven, R.id.btEight, R.id.btNine, R.id.btZero)) {
+            val btn = findViewById<View>(btnId) as Button
+            btn.setOnClickListener { v -> appendStringFromButton(v as Button) }
+        }
 
         btnclr!!.setOnClickListener {
             binding.tvResult.text = ""
@@ -70,13 +78,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun performOperation(first: Int, second: Int, operation: String): Int {
-            if (ac == "+") {
+            if (operation == "+") {
                 return first + second
-            } else if (ac == "-") {
+            } else if (operation == "-") {
                 return first - second
-            } else if (ac == "*") {
+            } else if (operation == "*") {
                 return first * second
-            } else if (ac == "/") {
+            } else if (operation == "/") {
                 if (second == 0) {
                     return 0
                 } else {
@@ -114,44 +122,5 @@ class MainActivity : AppCompatActivity() {
         btnsub!!.setOnClickListener{ v -> operationSelected(v as Button)}
         btnmul!!.setOnClickListener{ v -> operationSelected(v as Button)}
         btndiv!!.setOnClickListener{ v -> operationSelected(v as Button)}
-
-
-        // тут мы просто забираем заголовок и добавляем его к TextView
-        fun appendStringFromButton(btn: Button) {
-            if (didSelectOperation) {
-                binding.tvResult.text = ""
-                didSelectOperation = false
-            }
-
-            var buttonTitle = btn.getText().toString()
-
-            // supress multiple 000.. and 01, etc
-            var resultString = binding.tvResult.text.toString().plus(buttonTitle).toInt().toString()
-            binding.tvResult.text = resultString
-
-            /*
-            binding.tvResult.text = binding.tvResult.text.toString()
-                .replace("+","")
-                .replace("-","")
-                .replace("*","")
-                .replace("/","")
-                .plus(buttonTitle)
-             */
-        }
-
-        // Никит, смотри
-        // - тут я отдаю в функцию параметром кнопку, на которую кликнули
-        // - и уже там из этой кнопки достаю ее title, его добавляю в TextView
-        // - таким образом наш код универсальнее и унифицированнее получился
-        btnone!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
-        btntwo!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
-        btnthree!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
-        btnfour!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
-        btnfive!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
-        btnsix!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
-        btnseven!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
-        btneight!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
-        btnnine!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
-        btnzero!!.setOnClickListener { v -> appendStringFromButton(v as Button) }
     }
 }
