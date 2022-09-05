@@ -30,14 +30,15 @@ class MainActivity : AppCompatActivity() {
     private var btnzero: Button? = null
     private var btnclr: Button? = null
 
+    private var firstNumber = ""
+    private var secondNumber = ""
+    private var ac = ""
+    private var didSelectOperation = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        var firstNumber = ""
-        var secondNumber = ""
-        var ac = ""
 
 
         btnadd = findViewById<View>(R.id.btPlus) as Button
@@ -68,45 +69,46 @@ class MainActivity : AppCompatActivity() {
             ac = "".take(1)
         }
 
+        fun performOperation(first: Int, second: Int, operation: String): Int {
+            if (ac == "+") {
+                return first + second
+            } else if (ac == "-") {
+                return first - second
+            } else if (ac == "*") {
+                return first * second
+            } else if (ac == "/") {
+                if (second == 0) {
+                    return 0
+                } else {
+                    return first / second
+                }
+            } else {
+                return second
+            }
+        }
         
         btneq!!.setOnClickListener {
-            secondNumber = binding.tvResult.text.toString()
-            var result = 0
-            secondNumber = secondNumber.replace("+", "")
-            secondNumber = secondNumber.replace("-", "")
-            secondNumber = secondNumber.replace("*", "")
-            secondNumber = secondNumber.replace("/", "")
+            if (ac.isEmpty()) {
+                // do nothing in case there is no operation selected
+                return@setOnClickListener
+            }
 
-            var firstInt = firstNumber.toInt()
-            var secondInt = secondNumber.toInt()
-            if (ac.contains("+")){
-                result = firstInt + secondInt
+            secondNumber = binding.tvResult.text.toString()
+            if (secondNumber.isEmpty()) {
+                secondNumber = firstNumber
             }
-            if (ac.contains("-")) {
-                result = firstInt - secondInt
-            }
-            if (ac.contains("*")) {
-                result = firstInt * secondInt
-            }
-            if (ac.contains("/")) {
-                if(firstNumber!="0"&&secondNumber!="0") {
-                    result = firstInt / secondInt
-                }
-                else{
-                    result = 0
-                }
-            }
+
+            var result = performOperation( firstNumber.toInt(), secondNumber.toInt(), ac )
             binding.tvResult.text = result.toString()
         }
 
-        fun operationSelected(btn: Button){
+        fun operationSelected(btn: Button) {
             firstNumber = binding.tvResult.text.toString()
             ac = btn.getText().toString()
-            if(firstNumber!=""){
-                binding.tvResult.text = ac
-            }
-        }
 
+            // mark as true, so when user taps on digit next time we'll reset the text view
+            didSelectOperation = true
+        }
 
         btnadd!!.setOnClickListener{ v -> operationSelected(v as Button)}
         btnsub!!.setOnClickListener{ v -> operationSelected(v as Button)}
@@ -116,13 +118,25 @@ class MainActivity : AppCompatActivity() {
 
         // тут мы просто забираем заголовок и добавляем его к TextView
         fun appendStringFromButton(btn: Button) {
+            if (didSelectOperation) {
+                binding.tvResult.text = ""
+                didSelectOperation = false
+            }
+
             var buttonTitle = btn.getText().toString()
+
+            // supress multiple 000.. and 01, etc
+            var resultString = binding.tvResult.text.toString().plus(buttonTitle).toInt().toString()
+            binding.tvResult.text = resultString
+
+            /*
             binding.tvResult.text = binding.tvResult.text.toString()
                 .replace("+","")
                 .replace("-","")
                 .replace("*","")
                 .replace("/","")
                 .plus(buttonTitle)
+             */
         }
 
         // Никит, смотри
