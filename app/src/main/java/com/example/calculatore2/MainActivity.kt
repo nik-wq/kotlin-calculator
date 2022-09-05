@@ -18,16 +18,6 @@ class MainActivity : AppCompatActivity() {
     private var btndiv: Button? = null
     private var btneq: Button? = null
     private var txtresult: TextView? = null
-    private var btnseven: Button? = null
-    private var btnone: Button? = null
-    private var btntwo: Button? = null
-    private var btnthree: Button? = null
-    private var btnfour: Button? = null
-    private var btnfive: Button? = null
-    private var btnsix: Button? = null
-    private var btneight: Button? = null
-    private var btnnine: Button? = null
-    private var btnzero: Button? = null
     private var btnclr: Button? = null
 
     private var firstNumber = ""
