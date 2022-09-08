@@ -12,15 +12,14 @@
         android:id="@+id/tvResult"
         android:layout_width="401dp"
         android:layout_height="152dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="12dp"
         android:background="#BCBBBB"
         android:backgroundTint="#B8B8B8"
         android:gravity="end"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -133,14 +132,35 @@
         android:layout_width="88dp"
         android:layout_height="76dp"
         android:layout_margin="10sp"
-        android:layout_marginStart="128dp"
         android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="110dp"
         android:backgroundTint="#818181"
         android:text="0"
         android:textColor="#272727"
         android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btDot"
+        app:layout_constraintTop_toBottomOf="@+id/btThree"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btDot"
+        android:layout_width="88dp"
+        android:layout_height="76dp"
+        android:layout_margin="10sp"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="108dp"
+        android:backgroundTint="#818181"
+        android:text="."
+        android:textColor="#272727"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btThree" />
+        app:layout_constraintTop_toBottomOf="@+id/btTwo"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btFive"

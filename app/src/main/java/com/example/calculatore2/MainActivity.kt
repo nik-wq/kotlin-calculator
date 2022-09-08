@@ -19,11 +19,13 @@ class MainActivity : AppCompatActivity() {
     private var btneq: Button? = null
     private var txtresult: TextView? = null
     private var btnclr: Button? = null
+    private var btndot: Button? = null
 
     private var firstNumber = ""
     private var secondNumber = ""
     private var ac = ""
     private var didSelectOperation = false
+    private var dotAdded = false
 
     // тут мы просто забираем заголовок и добавляем его к TextView
     fun appendStringFromButton(btn: Button) {
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         var buttonTitle = btn.getText().toString()
 
         // supress multiple 000.. and 01, etc
-        var resultString = binding.tvResult.text.toString().plus(buttonTitle).toInt().toString()
+        var resultString = binding.tvResult.text.toString().plus(buttonTitle).toLong().toString()
         binding.tvResult.text = resultString
     }
 
@@ -52,10 +54,11 @@ class MainActivity : AppCompatActivity() {
         txtresult = findViewById<View>(R.id.tvResult) as TextView
         btneq = findViewById<View>(R.id.btEquals) as Button
         btnclr = findViewById<View>(R.id.btClear) as Button
+        btndot = binding.btDot
 
 
         // setup digits listener
-        for (btnId in arrayOf(R.id.btOne, R.id.btTwo, R.id.btThree, R.id.btFour, R.id.btFive, R.id.btSix, R.id.btSeven, R.id.btEight, R.id.btNine, R.id.btZero)) {
+        for (btnId in arrayOf(R.id.btOne, R.id.btTwo, R.id.btThree, R.id.btFour, R.id.btFive, R.id.btSix, R.id.btSeven, R.id.btEight, R.id.btNine, R.id.btZero)){
             val btn = findViewById<View>(btnId) as Button
             btn.setOnClickListener { v -> appendStringFromButton(v as Button) }
         }
@@ -64,10 +67,11 @@ class MainActivity : AppCompatActivity() {
             binding.tvResult.text = ""
             firstNumber = ""
             secondNumber = ""
-            ac = "".take(1)
+            ac = ""
         }
 
-        fun performOperation(first: Int, second: Int, operation: String): Int {
+
+        fun performOperation(first: Long, second: Long, operation: String): Long {
             if (operation == "+") {
                 return first + second
             } else if (operation == "-") {
@@ -75,8 +79,8 @@ class MainActivity : AppCompatActivity() {
             } else if (operation == "*") {
                 return first * second
             } else if (operation == "/") {
-                if (second == 0) {
-                    return 0
+                if(second == 0L) {
+                    return 0L
                 } else {
                     return first / second
                 }
@@ -84,11 +88,29 @@ class MainActivity : AppCompatActivity() {
                 return second
             }
         }
+
+
+        fun addDot(){
+                binding.tvResult.text = binding.tvResult.text.toString().plus(".")
+
+
+        }
+
+        btndot!!.setOnClickListener{
+            if(binding.tvResult.text.contains(".")){}
+            else{
+                addDot()
+                dotAdded = true
+            }
+
+        }
         
         btneq!!.setOnClickListener {
             if (ac.isEmpty()) {
                 // do nothing in case there is no operation selected
                 return@setOnClickListener
+            }
+            if (dotAdded){
             }
 
             secondNumber = binding.tvResult.text.toString()
@@ -96,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                 secondNumber = firstNumber
             }
 
-            var result = performOperation( firstNumber.toInt(), secondNumber.toInt(), ac )
+            var result = performOperation( firstNumber.toLong(), secondNumber.toLong(), ac )
             binding.tvResult.text = result.toString()
         }
 
