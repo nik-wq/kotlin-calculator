@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         var buttonTitle = btn.getText().toString()
 
         // supress multiple 000.. and 01, etc
-        var resultString = binding.tvResult.text.toString().plus(buttonTitle).toLong().toString()
+        var resultString = binding.tvResult.text.toString().plus(buttonTitle).toDouble().toString()
         binding.tvResult.text = resultString
     }
 
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        fun performOperation(first: Long, second: Long, operation: String): Long {
+        fun performOperation(first: Double, second: Double, operation: String): Double {
             if (operation == "+") {
                 return first + second
             } else if (operation == "-") {
@@ -79,8 +79,8 @@ class MainActivity : AppCompatActivity() {
             } else if (operation == "*") {
                 return first * second
             } else if (operation == "/") {
-                if(second == 0L) {
-                    return 0L
+                if(second == 0.0) {
+                    return 0.0
                 } else {
                     return first / second
                 }
@@ -89,20 +89,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-        fun addDot(){
+        fun addDot() {
                 binding.tvResult.text = binding.tvResult.text.toString().plus(".")
-
-
         }
 
         btndot!!.setOnClickListener{
-            if(binding.tvResult.text.contains(".")){}
-            else{
+            if(!binding.tvResult.text.contains(".")){
                 addDot()
                 dotAdded = true
             }
-
         }
         
         btneq!!.setOnClickListener {
@@ -118,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                 secondNumber = firstNumber
             }
 
-            var result = performOperation( firstNumber.toLong(), secondNumber.toLong(), ac )
+            var result = performOperation( firstNumber.toDouble(), secondNumber.toDouble(), ac )
             binding.tvResult.text = result.toString()
         }
 
