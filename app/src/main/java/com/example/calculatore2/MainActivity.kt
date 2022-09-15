@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calculatore2.databinding.ActivityMainBinding
-
+import java.text.DecimalFormat
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -69,22 +69,50 @@ class MainActivity : AppCompatActivity() {
             ac = ""
         }
 
-        fun performOperation(first: Double, second: Double, operation: String): Double {
+        fun decimalsCount(str: String): Int {
+            val arr = str.split(".")
+            if (arr.size > 1) {
+                return arr[1].length
+            } else {
+                return 0
+            }
+        }
+
+        fun displayString(number: Double, decimalsCount: Int): String {
+            var df = DecimalFormat("#")
+            if (decimalsCount > 0) {
+                var pattern = "#."
+                for (i in 0..decimalsCount) {
+                    pattern += "#"
+                }
+                df = DecimalFormat(pattern)
+            }
+
+            return df.format(number)
+        }
+
+        fun performOperation(firstStr: String, secondStr: String, operation: String): String {
+            val first = firstStr.toDouble()
+            val second = secondStr.toDouble()
+
+            val decimalsCount = maxOf( decimalsCount(firstStr), decimalsCount(secondStr) )
+
+            var result = second
             if (operation == "+") {
-                return first + second
+                result =  first + second
             } else if (operation == "-") {
-                return first - second
+                result =  first - second
             } else if (operation == "*") {
-                return first * second
+                result =  first * second
             } else if (operation == "/") {
                 if(second == 0.0) {
-                    return 0.0
+                    result =  0.0
                 } else {
-                    return first / second
+                    result =  first / second
                 }
-            } else {
-                return second
             }
+
+            return displayString( result, decimalsCount )
         }
 
         fun addDot() {
@@ -109,8 +137,7 @@ class MainActivity : AppCompatActivity() {
                 secondNumber = firstNumber
             }
 
-            var result = performOperation( firstNumber.toDouble(), secondNumber.toDouble(), ac )
-            binding.tvResult.text = result.toString()
+            binding.tvResult.text = performOperation( firstNumber, secondNumber, ac )
         }
 
         fun operationSelected(btn: Button) {
