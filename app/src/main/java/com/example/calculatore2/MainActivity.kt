@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.trimmedLength
 import com.example.calculatore2.databinding.ActivityMainBinding
 
 
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         var buttonTitle = btn.getText().toString()
 
         // supress multiple 000.. and 01, etc
-        var resultString = binding.tvResult.text.toString().plus(buttonTitle).toDouble().toString()
+        var resultString = binding.tvResult.text.toString().plus(buttonTitle)
         binding.tvResult.text = resultString
     }
 
@@ -47,20 +46,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        btnadd = findViewById<View>(R.id.btPlus) as Button
-        btnsub = findViewById<View>(R.id.btMinus) as Button
-        btnmul = findViewById<View>(R.id.btMultiply) as Button
-        btndiv = findViewById<View>(R.id.btDivide) as Button
-        txtresult = findViewById<View>(R.id.tvResult) as TextView
-        btneq = findViewById<View>(R.id.btEquals) as Button
-        btnclr = findViewById<View>(R.id.btClear) as Button
+        btnadd = binding.btPlus
+        btnsub = binding.btMinus
+        btnmul = binding.btMultiply
+        btndiv = binding.btDivide
+        txtresult = binding.tvResult
+        btneq = binding.btEquals
+        btnclr = binding.btClear
         btndot = binding.btDot
 
 
         // setup digits listener
         for (btnId in arrayOf(R.id.btOne, R.id.btTwo, R.id.btThree, R.id.btFour, R.id.btFive, R.id.btSix, R.id.btSeven, R.id.btEight, R.id.btNine, R.id.btZero)){
             val btn = findViewById<View>(btnId) as Button
-            btn.setOnClickListener { v -> appendStringFromButton(v as Button) }
+            btn.setOnClickListener {v -> appendStringFromButton(v as Button) }
         }
 
         btnclr!!.setOnClickListener {
@@ -69,7 +68,6 @@ class MainActivity : AppCompatActivity() {
             secondNumber = ""
             ac = ""
         }
-
 
         fun performOperation(first: Double, second: Double, operation: String): Double {
             if (operation == "+") {
@@ -104,8 +102,6 @@ class MainActivity : AppCompatActivity() {
             if (ac.isEmpty()) {
                 // do nothing in case there is no operation selected
                 return@setOnClickListener
-            }
-            if (dotAdded){
             }
 
             secondNumber = binding.tvResult.text.toString()
