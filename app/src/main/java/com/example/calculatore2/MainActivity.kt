@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private var ac = ""
     private var didSelectOperation = false
     private var dotAdded = false
+    private var operationComplete = false
 
     // тут мы просто забираем заголовок и добавляем его к TextView
     fun appendStringFromButton(btn: Button) {
@@ -111,6 +112,10 @@ class MainActivity : AppCompatActivity() {
                     result =  first / second
                 }
             }
+            if(operationComplete) {
+                result = first
+            }
+            operationComplete
 
             return displayString( result, decimalsCount )
         }
@@ -137,7 +142,12 @@ class MainActivity : AppCompatActivity() {
                 secondNumber = firstNumber
             }
 
-            binding.tvResult.text = performOperation( firstNumber, secondNumber, ac )
+            if(!operationComplete) {
+                binding.tvResult.text = performOperation(firstNumber, secondNumber, ac)
+            }
+            else{
+                binding.tvResult.text = performOperation(firstNumber, secondNumber, ac)
+            }
         }
 
         fun operationSelected(btn: Button) {
