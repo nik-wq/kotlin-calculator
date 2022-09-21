@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private var txtresult: TextView? = null
     private var btnclr: Button? = null
     private var btndot: Button? = null
+    private var btnrem: Button? = null
 
     private var firstNumber = ""
     private var secondNumber = ""
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         btneq = binding.btEquals
         btnclr = binding.btClear
         btndot = binding.btDot
+        btnrem = binding.btRemove
 
 
         // setup digits listener
@@ -121,12 +123,25 @@ class MainActivity : AppCompatActivity() {
 
             return displayString( result, decimalsCount )
         }
+        fun dropLastString() {
+            if(ac==""){
+                firstNumber = binding.tvResult.text.toString()
+                binding.tvResult.text = firstNumber.dropLast(1)
+            }
+            else{
+                secondNumber = binding.tvResult.text.toString()
+                binding.tvResult.text = secondNumber.dropLast(1)
+            }
+        }
 
         fun addDot() {
             binding.tvResult.text = binding.tvResult.text.toString().plus(".")
         }
+        btnrem!!.setOnClickListener {
+            dropLastString()
+        }
 
-        btndot!!.setOnClickListener{
+        btndot!!.setOnClickListener {
             if(!binding.tvResult.text.contains(".")){
                 addDot()
                 dotAdded = true
