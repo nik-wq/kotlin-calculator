@@ -23,9 +23,11 @@ class MainActivity : AppCompatActivity() {
     private var firstNumber = ""
     private var secondNumber = ""
     private var ac = ""
+    private var previousAC = ""
+
     private var didSelectOperation = false
     private var dotAdded = false
-    private var operationComplete = false
+
 
     // тут мы просто забираем заголовок и добавляем его к TextView
     fun appendStringFromButton(btn: Button) {
@@ -68,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             firstNumber = ""
             secondNumber = ""
             ac = ""
+            previousAC = ""
         }
 
         fun decimalsCount(str: String): Int {
@@ -112,16 +115,15 @@ class MainActivity : AppCompatActivity() {
                     result =  first / second
                 }
             }
-            if(operationComplete) {
-                result = first
-            }
-            operationComplete
+
+            // update firstNumber so we can reuse it if user press '=' again
+            firstNumber = result.toString()
 
             return displayString( result, decimalsCount )
         }
 
         fun addDot() {
-                binding.tvResult.text = binding.tvResult.text.toString().plus(".")
+            binding.tvResult.text = binding.tvResult.text.toString().plus(".")
         }
 
         btndot!!.setOnClickListener{
@@ -129,28 +131,35 @@ class MainActivity : AppCompatActivity() {
                 addDot()
                 dotAdded = true
             }
+
+            // reset previous AC
+            previousAC = ""
         }
-        
+
         btneq!!.setOnClickListener {
             if (ac.isEmpty()) {
                 // do nothing in case there is no operation selected
                 return@setOnClickListener
             }
 
-            secondNumber = binding.tvResult.text.toString()
-            if (secondNumber.isEmpty()) {
-                secondNumber = firstNumber
+            if (previousAC != "=") {
+                secondNumber = binding.tvResult.text.toString()
+                if (secondNumber.isEmpty()) {
+                    secondNumber = firstNumber
+                }
+            } else {
+                // repeat the action
+                // do nothing, all the numbers are set up already
             }
 
-            if(!operationComplete) {
-                binding.tvResult.text = performOperation(firstNumber, secondNumber, ac)
-            }
-            else{
-                binding.tvResult.text = performOperation(firstNumber, secondNumber, ac)
-            }
+            binding.tvResult.text = performOperation(firstNumber, secondNumber, ac)
+
+            previousAC = "="
         }
 
         fun operationSelected(btn: Button) {
+            previousAC = ac
+
             firstNumber = binding.tvResult.text.toString()
             ac = btn.getText().toString()
 
