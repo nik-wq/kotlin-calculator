@@ -43,6 +43,23 @@ class MainActivity : AppCompatActivity() {
         var resultString = binding.tvResult.text.toString().plus(buttonTitle)
         binding.tvResult.text = resultString
     }
+    fun removeRedundantZero() {
+        firstNumber = binding.tvResult.text.toString()
+        if(firstNumber == "00"){
+            binding.tvResult.text = firstNumber.substring(1)
+        }
+        when(firstNumber){
+            "01" -> binding.tvResult.text = firstNumber.drop(1)
+            "02" -> binding.tvResult.text = firstNumber.drop(1)
+            "03" -> binding.tvResult.text = firstNumber.drop(1)
+            "04" -> binding.tvResult.text = firstNumber.drop(1)
+            "05" -> binding.tvResult.text = firstNumber.drop(1)
+            "06" -> binding.tvResult.text = firstNumber.drop(1)
+            "07" -> binding.tvResult.text = firstNumber.drop(1)
+            "08" -> binding.tvResult.text = firstNumber.drop(1)
+            "09" -> binding.tvResult.text = firstNumber.drop(1)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -64,7 +81,8 @@ class MainActivity : AppCompatActivity() {
         // setup digits listener
         for (btnId in arrayOf(R.id.btOne, R.id.btTwo, R.id.btThree, R.id.btFour, R.id.btFive, R.id.btSix, R.id.btSeven, R.id.btEight, R.id.btNine, R.id.btZero)){
             val btn = findViewById<View>(btnId) as Button
-            btn.setOnClickListener {v -> appendStringFromButton(v as Button) }
+            btn.setOnClickListener { v -> appendStringFromButton(v as Button)
+            removeRedundantZero() }
         }
 
         btnclr!!.setOnClickListener {
@@ -133,6 +151,8 @@ class MainActivity : AppCompatActivity() {
                 binding.tvResult.text = secondNumber.dropLast(1)
             }
         }
+
+
 
         fun addDot() {
             binding.tvResult.text = binding.tvResult.text.toString().plus(".")
