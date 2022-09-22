@@ -124,11 +124,11 @@ class MainActivity : AppCompatActivity() {
             return displayString( result, decimalsCount )
         }
         fun dropLastString() {
-            if(ac==""){
+            if(ac=="") {
                 firstNumber = binding.tvResult.text.toString()
                 binding.tvResult.text = firstNumber.dropLast(1)
             }
-            else{
+            else {
                 secondNumber = binding.tvResult.text.toString()
                 binding.tvResult.text = secondNumber.dropLast(1)
             }
@@ -152,16 +152,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         btneq!!.setOnClickListener {
+            if(firstNumber.isEmpty()) {
+                firstNumber="0"
+            }
             if (ac.isEmpty()) {
                 // do nothing in case there is no operation selected
                 return@setOnClickListener
             }
 
             if (previousAC != "=") {
-                secondNumber = binding.tvResult.text.toString()
                 if (secondNumber.isEmpty()) {
-                    secondNumber = firstNumber
+                    secondNumber = "0"
                 }
+                    secondNumber = binding.tvResult.text.toString()
+
+
             } else {
                 // repeat the action
                 // do nothing, all the numbers are set up already
@@ -182,9 +187,13 @@ class MainActivity : AppCompatActivity() {
             didSelectOperation = true
         }
 
-        btnadd!!.setOnClickListener{ v -> operationSelected(v as Button)}
-        btnsub!!.setOnClickListener{ v -> operationSelected(v as Button)}
-        btnmul!!.setOnClickListener{ v -> operationSelected(v as Button)}
-        btndiv!!.setOnClickListener{ v -> operationSelected(v as Button)}
+        btnadd!!.setOnClickListener{ v -> operationSelected(v as Button)
+            binding.tvResult.text = "+"}
+        btnsub!!.setOnClickListener{ v -> operationSelected(v as Button)
+            binding.tvResult.text = "-"}
+        btnmul!!.setOnClickListener{ v -> operationSelected(v as Button)
+            binding.tvResult.text = "*"}
+        btndiv!!.setOnClickListener{ v -> operationSelected(v as Button)
+            binding.tvResult.text = "/"}
     }
 }
