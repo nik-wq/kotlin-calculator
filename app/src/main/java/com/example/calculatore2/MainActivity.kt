@@ -44,20 +44,9 @@ class MainActivity : AppCompatActivity() {
         binding.tvResult.text = resultString
     }
     fun removeRedundantZero() {
-        firstNumber = binding.tvResult.text.toString()
-        if(firstNumber == "00"){
-            binding.tvResult.text = firstNumber.substring(1)
-        }
-        when(firstNumber){
-            "01" -> binding.tvResult.text = firstNumber.drop(1)
-            "02" -> binding.tvResult.text = firstNumber.drop(1)
-            "03" -> binding.tvResult.text = firstNumber.drop(1)
-            "04" -> binding.tvResult.text = firstNumber.drop(1)
-            "05" -> binding.tvResult.text = firstNumber.drop(1)
-            "06" -> binding.tvResult.text = firstNumber.drop(1)
-            "07" -> binding.tvResult.text = firstNumber.drop(1)
-            "08" -> binding.tvResult.text = firstNumber.drop(1)
-            "09" -> binding.tvResult.text = firstNumber.drop(1)
+        val RedundantR: String = binding.tvResult.text.toString()
+        if(RedundantR.length==2 && RedundantR.startsWith("0")){
+            binding.tvResult.text = RedundantR.substring(1)
         }
     }
 
@@ -82,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         for (btnId in arrayOf(R.id.btOne, R.id.btTwo, R.id.btThree, R.id.btFour, R.id.btFive, R.id.btSix, R.id.btSeven, R.id.btEight, R.id.btNine, R.id.btZero)){
             val btn = findViewById<View>(btnId) as Button
             btn.setOnClickListener { v -> appendStringFromButton(v as Button)
-            removeRedundantZero() }
+                removeRedundantZero() }
         }
 
         btnclr!!.setOnClickListener {
@@ -172,6 +161,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         btneq!!.setOnClickListener {
+            if(firstNumber=="."){
+                firstNumber="0"
+            }
             if(firstNumber.isEmpty()) {
                 firstNumber="0"
             }
@@ -207,13 +199,19 @@ class MainActivity : AppCompatActivity() {
             didSelectOperation = true
         }
 
-        btnadd!!.setOnClickListener{ v -> operationSelected(v as Button)
-            binding.tvResult.text = "+"}
-        btnsub!!.setOnClickListener{ v -> operationSelected(v as Button)
-            binding.tvResult.text = "-"}
-        btnmul!!.setOnClickListener{ v -> operationSelected(v as Button)
-            binding.tvResult.text = "*"}
-        btndiv!!.setOnClickListener{ v -> operationSelected(v as Button)
-            binding.tvResult.text = "/"}
+
+            btnadd!!.setOnClickListener { v -> operationSelected(v as Button)
+                binding.tvResult.text = "+"
+            }
+            btnsub!!.setOnClickListener { v -> operationSelected(v as Button)
+                binding.tvResult.text = "-"
+            }
+            btnmul!!.setOnClickListener { v -> operationSelected(v as Button)
+                binding.tvResult.text = "*"
+            }
+            btndiv!!.setOnClickListener { v -> operationSelected(v as Button)
+                binding.tvResult.text = "/"
+            }
+
     }
 }
