@@ -1,6 +1,8 @@
 package com.example.calculatore2
 
 import android.os.Bundle
+import android.os.Debug
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -29,6 +31,19 @@ class MainActivity : AppCompatActivity() {
     private var didSelectOperation = false
     private var dotAdded = false
 
+    // helpers
+
+    fun isStringOperation(string: String): Boolean {
+        return (string == "+" || string == "/" || string == "*" || string == "-")
+    }
+
+    fun removeRedundantZero(sourceString: String): String {
+        if(sourceString.length == 2 && sourceString.startsWith("0")){
+            return sourceString.substring(1)
+        } else {
+            return sourceString
+        }
+    }
 
     // тут мы просто забираем заголовок и добавляем его к TextView
     fun appendStringFromButton(btn: Button) {
@@ -41,14 +56,9 @@ class MainActivity : AppCompatActivity() {
 
         // supress multiple 000.. and 01, etc
         var resultString = binding.tvResult.text.toString().plus(buttonTitle)
-        binding.tvResult.text = resultString
+        binding.tvResult.text = removeRedundantZero(resultString)
     }
-    fun removeRedundantZero() {
-        val RedundantR: String = binding.tvResult.text.toString()
-        if(RedundantR.length==2 && RedundantR.startsWith("0")){
-            binding.tvResult.text = RedundantR.substring(1)
-        }
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -70,8 +80,7 @@ class MainActivity : AppCompatActivity() {
         // setup digits listener
         for (btnId in arrayOf(R.id.btOne, R.id.btTwo, R.id.btThree, R.id.btFour, R.id.btFive, R.id.btSix, R.id.btSeven, R.id.btEight, R.id.btNine, R.id.btZero)){
             val btn = findViewById<View>(btnId) as Button
-            btn.setOnClickListener { v -> appendStringFromButton(v as Button)
-                removeRedundantZero() }
+            btn.setOnClickListener { v -> appendStringFromButton(v as Button) }
         }
 
         btnclr!!.setOnClickListener {
@@ -161,28 +170,32 @@ class MainActivity : AppCompatActivity() {
         }
 
         btneq!!.setOnClickListener {
-            if(firstNumber=="."){
-                firstNumber="0"
+            if (isStringOperation( binding.tvResult.text.toString())) {
+                return@setOnClickListener
             }
-            if(firstNumber.isEmpty()) {
-                firstNumber="0"
-            }
+
             if (ac.isEmpty()) {
                 // do nothing in case there is no operation selected
                 return@setOnClickListener
             }
 
+            if (firstNumber == "." || firstNumber.isEmpty()) {
+                firstNumber = "0"
+            }
+
+            Log.d("CALCULATOR", "ac == " + ac + ", first == " + firstNumber)
+
             if (previousAC != "=") {
+                secondNumber = binding.tvResult.text.toString()
                 if (secondNumber.isEmpty()) {
                     secondNumber = "0"
                 }
-                    secondNumber = binding.tvResult.text.toString()
-
-
             } else {
                 // repeat the action
                 // do nothing, all the numbers are set up already
             }
+
+            Log.d("CALCULATOR", "first == " + firstNumber + ", second == " + secondNumber)
 
             binding.tvResult.text = performOperation(firstNumber, secondNumber, ac)
 
@@ -197,21 +210,17 @@ class MainActivity : AppCompatActivity() {
 
             // mark as true, so when user taps on digit next time we'll reset the text view
             didSelectOperation = true
+
+            if ( !binding.tvResult.text.toString().isEmpty() || btn.getText().toString() == "-"  ) {
+                binding.tvResult.text = btn.getText().toString()
+            }
         }
 
 
-            btnadd!!.setOnClickListener { v -> operationSelected(v as Button)
-                binding.tvResult.text = "+"
-            }
-            btnsub!!.setOnClickListener { v -> operationSelected(v as Button)
-                binding.tvResult.text = "-"
-            }
-            btnmul!!.setOnClickListener { v -> operationSelected(v as Button)
-                binding.tvResult.text = "*"
-            }
-            btndiv!!.setOnClickListener { v -> operationSelected(v as Button)
-                binding.tvResult.text = "/"
-            }
+        btnadd!!.setOnClickListener { v -> operationSelected(v as Button) }
+        btnsub!!.setOnClickListener { v -> operationSelected(v as Button) }
+        btnmul!!.setOnClickListener { v -> operationSelected(v as Button) }
+        btndiv!!.setOnClickListener { v -> operationSelected(v as Button) }
 
     }
 }
