@@ -1,7 +1,6 @@
 package com.example.calculatore2
 
 import android.os.Bundle
-import android.os.Debug
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -30,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private var didSelectOperation = false
     private var dotAdded = false
+    private var cdecimalsCount = false
 
     // helpers
 
@@ -83,12 +83,15 @@ class MainActivity : AppCompatActivity() {
             btn.setOnClickListener { v -> appendStringFromButton(v as Button) }
         }
 
+        var result = 0.0
+
         btnclr!!.setOnClickListener {
             binding.tvResult.text = ""
             firstNumber = ""
             secondNumber = ""
             ac = ""
             previousAC = ""
+            cdecimalsCount = false
         }
 
         fun decimalsCount(str: String): Int {
@@ -119,7 +122,7 @@ class MainActivity : AppCompatActivity() {
 
             val decimalsCount = maxOf( decimalsCount(firstStr), decimalsCount(secondStr) )
 
-            var result = second
+            result = second
             if (operation == "+") {
                 result =  first + second
             } else if (operation == "-") {
@@ -131,6 +134,9 @@ class MainActivity : AppCompatActivity() {
                     result =  0.0
                 } else {
                     result =  first / second
+                    if(decimalsCount(result.toString())!=0){
+                        cdecimalsCount = true
+                    }
                 }
             }
 
@@ -198,6 +204,9 @@ class MainActivity : AppCompatActivity() {
             Log.d("CALCULATOR", "first == " + firstNumber + ", second == " + secondNumber)
 
             binding.tvResult.text = performOperation(firstNumber, secondNumber, ac)
+            if(cdecimalsCount) {
+                binding.tvResult.text = displayString(result, 3)
+            }
 
             previousAC = "="
         }
