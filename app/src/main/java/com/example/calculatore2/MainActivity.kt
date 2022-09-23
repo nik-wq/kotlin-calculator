@@ -52,10 +52,17 @@ class MainActivity : AppCompatActivity() {
             didSelectOperation = false
         }
 
-        var buttonTitle = btn.getText().toString()
+        var appendingString = ""
 
-        // supress multiple 000.. and 01, etc
-        var resultString = binding.tvResult.text.toString().plus(buttonTitle)
+        // if the string is empty and user selected '-' before and this is entering first number
+        // a little bit complicated, could be easier I guess... let's think about it, Nikita =)
+        if (firstNumber.isEmpty() && binding.tvResult.text.toString().isEmpty() && ac == "-") {
+            appendingString = "-"
+        }
+
+        appendingString += btn.getText().toString()
+
+        var resultString = binding.tvResult.text.toString().plus(appendingString)
         binding.tvResult.text = removeRedundantZero(resultString)
     }
 
@@ -145,6 +152,7 @@ class MainActivity : AppCompatActivity() {
 
             return displayString( result, decimalsCount )
         }
+
         fun dropLastString() {
             if(ac=="") {
                 firstNumber = binding.tvResult.text.toString()
@@ -213,20 +221,29 @@ class MainActivity : AppCompatActivity() {
 
         fun operationSelected(btn: Button) {
             previousAC = ac
+            val btnTitle = btn.getText().toString()
 
-            firstNumber = binding.tvResult.text.toString()
-            ac = btn.getText().toString()
+            // just to be sure...
+            if (!isStringOperation(binding.tvResult.text.toString())) {
+                firstNumber = binding.tvResult.text.toString()
+            }
+            ac = btnTitle
 
             // mark as true, so when user taps on digit next time we'll reset the text view
             didSelectOperation = true
 
+            // we show an operation if the first number is filled only
+            // edge case is when first number is negative
+            val isFirstNumberAndNegative = ( firstNumber.isEmpty() && btnTitle == "-" )
+            val isFirstNumberPresentAlready = !firstNumber.isEmpty()
 
-            if ( firstNumber.isEmpty() && btn.getText().toString() == "-" ) {
-                binding.tvResult.text = btn.getText().toString().plus(binding.tvResult.text)
-                Log.d("funOpS", "neg: ")
+            if (isFirstNumberAndNegative || isFirstNumberPresentAlready) {
+                binding.tvResult.text = btnTitle
+            } else {
+                // in all other cases let's just clear the text view -)
+                binding.tvResult.text = ""
             }
         }
-
 
         btnadd!!.setOnClickListener { v -> operationSelected(v as Button) }
         btnsub!!.setOnClickListener { v -> operationSelected(v as Button) }
