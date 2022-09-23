@@ -220,8 +220,10 @@ class MainActivity : AppCompatActivity() {
             // mark as true, so when user taps on digit next time we'll reset the text view
             didSelectOperation = true
 
-            if ( !binding.tvResult.text.toString().isEmpty() || btn.getText().toString() == "-"  ) {
-                binding.tvResult.text = btn.getText().toString()
+
+            if ( firstNumber.isEmpty() && btn.getText().toString() == "-" ) {
+                binding.tvResult.text = btn.getText().toString().plus(binding.tvResult.text)
+                Log.d("funOpS", "neg: ")
             }
         }
 
