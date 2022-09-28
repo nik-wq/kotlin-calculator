@@ -212,6 +212,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("CALCULATOR", "first == " + firstNumber + ", second == " + secondNumber)
 
             binding.tvResult.text = performOperation(firstNumber, secondNumber, ac)
+            binding.tvResult.text = binding.tvResult.text.toString().replace(",",".")
             if(cdecimalsCount) {
                 binding.tvResult.text = displayString(result, 3)
             }
