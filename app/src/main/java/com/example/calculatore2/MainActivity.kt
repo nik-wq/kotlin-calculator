@@ -1,5 +1,6 @@
 package com.example.calculatore2
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -43,6 +44,17 @@ class MainActivity : AppCompatActivity() {
         } else {
             return sourceString
         }
+    }
+
+    fun changeBtColor(btn: Button) {
+        if(binding.tvResult.text!="")
+        btn.getBackground().setColorFilter(getResources().getColor(R.color.btcolor2), PorterDuff.Mode.SRC_ATOP)
+    }
+    fun changeBtColorBack(btn: Button, btn1: Button, btn2: Button, btn3: Button) {
+        btn.getBackground().setColorFilter(getResources().getColor(R.color.btcolor), PorterDuff.Mode.SRC_ATOP)
+        btn1.getBackground().setColorFilter(getResources().getColor(R.color.btcolor), PorterDuff.Mode.SRC_ATOP)
+        btn2.getBackground().setColorFilter(getResources().getColor(R.color.btcolor), PorterDuff.Mode.SRC_ATOP)
+        btn3.getBackground().setColorFilter(getResources().getColor(R.color.btcolor), PorterDuff.Mode.SRC_ATOP)
     }
 
     // тут мы просто забираем заголовок и добавляем его к TextView
@@ -99,6 +111,7 @@ class MainActivity : AppCompatActivity() {
             ac = ""
             previousAC = ""
             cdecimalsCount = false
+            changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
         }
 
         fun decimalsCount(str: String): Int {
@@ -171,6 +184,9 @@ class MainActivity : AppCompatActivity() {
         }
         btnrem!!.setOnClickListener {
             dropLastString()
+            if(binding.tvResult.text==""){
+                changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
+            }
         }
 
         btndot!!.setOnClickListener {
@@ -184,6 +200,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btneq!!.setOnClickListener {
+            changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
             if (isStringOperation( binding.tvResult.text.toString())) {
                 return@setOnClickListener
             }
@@ -235,13 +252,13 @@ class MainActivity : AppCompatActivity() {
                 potentialSecondNumber.isNotEmpty() &&
                 !isStringOperation(potentialSecondNumber)) {
                 firstNumber = performOperation(firstNumber, potentialSecondNumber, previousAC)
+                binding.tvResult.text = firstNumber
                 
                 // binding.tvResult.text = btnTitle = firstNumber
                 
             } else if (!isStringOperation(binding.tvResult.text.toString())) {
                 firstNumber = binding.tvResult.text.toString()
             }
-
             ac = btnTitle
 
             // mark as true, so when user taps on digit next time we'll reset the text view
@@ -250,20 +267,31 @@ class MainActivity : AppCompatActivity() {
             // we show an operation if the first number is filled only
             // edge case is when first number is negative
             val isFirstNumberAndNegative = ( firstNumber.isEmpty() && btnTitle == "-" )
-            val isFirstNumberPresentAlready = !firstNumber.isEmpty()
 
-            if (isFirstNumberAndNegative || isFirstNumberPresentAlready) {
-                binding.tvResult.text = btnTitle
+            if (isFirstNumberAndNegative) {
+                binding.tvResult.text = "-"
             } else {
                 // in all other cases let's just clear the text view -)
                 // binding.tvResult.text = ""
             }
         }
 
-        btnadd!!.setOnClickListener { v -> operationSelected(v as Button) }
-        btnsub!!.setOnClickListener { v -> operationSelected(v as Button) }
-        btnmul!!.setOnClickListener { v -> operationSelected(v as Button) }
-        btndiv!!.setOnClickListener { v -> operationSelected(v as Button) }
+        btnadd!!.setOnClickListener { v -> operationSelected(v as Button)
+            changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
+            changeBtColor(btnadd!!)
+        }
+        btnsub!!.setOnClickListener { v -> operationSelected(v as Button)
+            changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
+            changeBtColor(btnsub!!)
+        }
+        btnmul!!.setOnClickListener { v -> operationSelected(v as Button)
+            changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
+            changeBtColor(btnmul!!)
+        }
+        btndiv!!.setOnClickListener { v -> operationSelected(v as Button)
+            changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
+            changeBtColor(btndiv!!)
+        }
 
     }
 }
