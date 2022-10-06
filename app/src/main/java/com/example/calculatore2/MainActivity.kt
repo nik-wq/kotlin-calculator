@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun changeBtColor(btn: Button) {
-        if(binding.tvResult.text!="")
-        btn.getBackground().setColorFilter(getResources().getColor(R.color.btcolor2), PorterDuff.Mode.SRC_ATOP)
+        if(binding.tvResult.text!=""&&binding.tvResult.text!="-")
+            btn.getBackground().setColorFilter(getResources().getColor(R.color.btcolor2), PorterDuff.Mode.SRC_ATOP)
     }
     fun changeBtColorBack(btn: Button, btn1: Button, btn2: Button, btn3: Button) {
         btn.getBackground().setColorFilter(getResources().getColor(R.color.btcolor), PorterDuff.Mode.SRC_ATOP)
@@ -139,6 +139,7 @@ class MainActivity : AppCompatActivity() {
         fun performOperation(firstStr: String, secondStr: String, operation: String): String {
             val first = firstStr.toDouble()
             val second = secondStr.toDouble()
+            first.toString().replace(",",".")
 
             val decimalsCount = maxOf( decimalsCount(firstStr), decimalsCount(secondStr) )
 
@@ -150,9 +151,12 @@ class MainActivity : AppCompatActivity() {
             } else if (operation == "*") {
                 result =  first * second
             } else if (operation == "/") {
+                first.toString().replace(",",".")
                 if(second == 0.0) {
+                    first.toString().replace(",",".")
                     result =  0.0
                 } else {
+                    first.toString().replace(",",".")
                     result =  first / second
                     if(decimalsCount(result.toString())!=0){
                         cdecimalsCount = true
@@ -253,9 +257,9 @@ class MainActivity : AppCompatActivity() {
                 !isStringOperation(potentialSecondNumber)) {
                 firstNumber = performOperation(firstNumber, potentialSecondNumber, previousAC)
                 binding.tvResult.text = firstNumber
-                
+
                 // binding.tvResult.text = btnTitle = firstNumber
-                
+
             } else if (!isStringOperation(binding.tvResult.text.toString())) {
                 firstNumber = binding.tvResult.text.toString()
             }
@@ -276,22 +280,50 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        fun makeAnim(btn: Button) {
+            val viewsToFade = ArrayList<View>()
+
+            viewsToFade.add(btn)
+            if(binding.tvResult.text != ""&&binding.tvResult.text != "-") {
+                for (v in viewsToFade) {
+                    v.alpha = 1f
+                }
+
+                for (v in viewsToFade) {
+                    v.animate().alpha(0f).setDuration(500).start()
+                }
+
+                for (v in viewsToFade) {
+                    v.alpha = 0f
+                }
+
+                for (v in viewsToFade) {
+                    changeBtColor(btn)
+                    v.animate().alpha(1f).setDuration(500).start()
+                }
+                changeBtColor(btn)
+            }
+        }
+
         btnadd!!.setOnClickListener { v -> operationSelected(v as Button)
             changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
+            makeAnim(btnadd!!)
             changeBtColor(btnadd!!)
         }
         btnsub!!.setOnClickListener { v -> operationSelected(v as Button)
             changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
+            makeAnim(btnsub!!)
             changeBtColor(btnsub!!)
         }
         btnmul!!.setOnClickListener { v -> operationSelected(v as Button)
             changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
+            makeAnim(btnmul!!)
             changeBtColor(btnmul!!)
         }
         btndiv!!.setOnClickListener { v -> operationSelected(v as Button)
             changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
+            makeAnim(btndiv!!)
             changeBtColor(btndiv!!)
         }
-
     }
 }
