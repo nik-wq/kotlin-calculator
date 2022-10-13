@@ -1,4 +1,4 @@
-package com.example.calculatore2
+package app.kopanev.calculatore2
 
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.calculatore2.R
 import com.example.calculatore2.databinding.ActivityMainBinding
 import java.text.DecimalFormat
 
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var btnclr: Button? = null
     private var btndot: Button? = null
     private var btnrem: Button? = null
+    private var btnprev: Button? = null
 
     private var firstNumber = ""
     private var secondNumber = ""
@@ -99,7 +101,9 @@ class MainActivity : AppCompatActivity() {
         // setup digits listener
         for (btnId in arrayOf(R.id.btOne, R.id.btTwo, R.id.btThree, R.id.btFour, R.id.btFive, R.id.btSix, R.id.btSeven, R.id.btEight, R.id.btNine, R.id.btZero)){
             val btn = findViewById<View>(btnId) as Button
-            btn.setOnClickListener { v -> appendStringFromButton(v as Button) }
+            btn.setOnClickListener { v -> appendStringFromButton(v as Button)
+                btnprev = v as Button
+            }
         }
 
         var result = 0.0
@@ -112,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             previousAC = ""
             cdecimalsCount = false
             changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
-
+            btnprev = it as Button
         }
 
         fun decimalsCount(str: String): Int {
@@ -138,9 +142,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun performOperation(firstStr: String, secondStr: String, operation: String): String {
+            firstStr.replace(",",".")
+            secondStr.replace(",",".")
             val first = firstStr.toDouble()
             val second = secondStr.toDouble()
-            first.toString().replace(",",".")
 
             val decimalsCount = maxOf( decimalsCount(firstStr), decimalsCount(secondStr) )
 
@@ -152,18 +157,17 @@ class MainActivity : AppCompatActivity() {
             } else if (operation == "*") {
                 result =  first * second
             } else if (operation == "/") {
-                first.toString().replace(",",".")
                 if(second == 0.0) {
-                    first.toString().replace(",",".")
                     result =  0.0
                 } else {
-                    first.toString().replace(",",".")
                     result =  first / second
                     if(decimalsCount(result.toString())!=0){
                         cdecimalsCount = true
                     }
                 }
             }
+
+
 
             // update firstNumber so we can reuse it if user press '=' again
             firstNumber = result.toString()
@@ -175,12 +179,10 @@ class MainActivity : AppCompatActivity() {
         fun dropLastString() {
             if(ac=="") {
                 firstNumber = binding.tvResult.text.toString()
-                firstNumber.replace(",",".")
                 binding.tvResult.text = firstNumber.dropLast(1)
             }
             else {
                 secondNumber = binding.tvResult.text.toString()
-                firstNumber.replace(",",".")
                 binding.tvResult.text = secondNumber.dropLast(1)
             }
         }
@@ -195,6 +197,7 @@ class MainActivity : AppCompatActivity() {
             if(binding.tvResult.text==""){
                 changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
             }
+            btnprev = it as Button
         }
 
         btndot!!.setOnClickListener {
@@ -205,6 +208,8 @@ class MainActivity : AppCompatActivity() {
 
             // reset previous AC
             previousAC = ""
+
+            btnprev = it as Button
         }
 
         btneq!!.setOnClickListener {
@@ -237,57 +242,66 @@ class MainActivity : AppCompatActivity() {
 
             Log.d("CALCULATOR", "first == " + firstNumber + ", second == " + secondNumber)
 
-            firstNumber.replace(",",".")
+
             binding.tvResult.text = performOperation(firstNumber, secondNumber, ac)
-            firstNumber.replace(",",".")
             binding.tvResult.text = binding.tvResult.text.toString().replace(",",".")
             if(cdecimalsCount) {
                 binding.tvResult.text = displayString(result, 3)
             }
-
             previousAC = "="
-            firstNumber = ""
-            secondNumber = ""
+            Log.d("CALCULATOR1", "pac == " + previousAC)
+            btnprev = it as Button
         }
 
         fun operationSelected(btn: Button) {
-            previousAC = ac
-            val btnTitle = btn.getText().toString()
+                if (previousAC != "=") {
+                    previousAC = ac
+                }
+                val btnTitle = btn.getText().toString()
 
-            // if we have first & (textBinding has number) & previousAC & previousAC != '='
-            // => perform first previousAC (textBinding has number)
-            // => save result to first
+                // if we have first & (textBinding has number) & previousAC & previousAC != '='
+                // => perform first previousAC (textBinding has number)
+                // => save result to first
 
-            val potentialSecondNumber = binding.tvResult.text.toString()
-            if (firstNumber.isNotEmpty() &&
-                firstNumber!="."&&
-                previousAC.isNotEmpty() &&
-                previousAC != "=" &&
-                potentialSecondNumber.isNotEmpty() &&
-                !isStringOperation(potentialSecondNumber )){
-                firstNumber = performOperation(firstNumber, potentialSecondNumber, previousAC)
-                binding.tvResult.text = firstNumber
+                val potentialSecondNumber = binding.tvResult.text.toString()
+                if (firstNumber.isNotEmpty() &&
+                    firstNumber != "." &&
+                    previousAC.isNotEmpty() &&
+                    previousAC != "=" &&
+                    potentialSecondNumber.isNotEmpty() &&
+                    !isStringOperation(potentialSecondNumber)
+                ) {
+                    Log.d("CALCULATOR1", "from line 276 ac == " + ac)
+                    Log.d("CALCULATOR1", "from line 277 pac == " + previousAC)
+                    firstNumber = performOperation(firstNumber, potentialSecondNumber, previousAC)
+                    binding.tvResult.text = firstNumber
+                    previousAC = ac
+                    Log.d("CALCULATOR1", "from line 282 pac == " + previousAC)
+                    // binding.tvResult.text = btnTitle = firstNumber
+                } else if (!isStringOperation(binding.tvResult.text.toString())) {
+                    firstNumber = binding.tvResult.text.toString()
+                }
+                ac = btnTitle
+                Log.d(
+                    "CALCULATOR1",
+                    "from operationSelected line 284:" + btnprev!!.getText().toString()
+                )
 
-                // binding.tvResult.text = btnTitle = firstNumber
+                // mark as true, so when user taps on digit next time we'll reset the text view
+                didSelectOperation = true
 
-            } else if (!isStringOperation(binding.tvResult.text.toString())) {
-                firstNumber = binding.tvResult.text.toString()
-            }
-            ac = btnTitle
+                // we show an operation if the first number is filled only
+                // edge case is when first number is negative
+                val isPreviousButtonAnOperation = isStringOperation(btnprev!!.getText().toString())
 
-            // mark as true, so when user taps on digit next time we'll reset the text view
-            didSelectOperation = true
+                val isFirstNumberAndNegative = ((firstNumber.isEmpty() || isPreviousButtonAnOperation) && btnTitle == "-")
 
-            // we show an operation if the first number is filled only
-            // edge case is when first number is negative
-            val isFirstNumberAndNegative = ( firstNumber.isEmpty() && btnTitle == "-" )
-
-            if (isFirstNumberAndNegative) {
-                binding.tvResult.text = "-"
-            } else {
-                // in all other cases let's just clear the text view -)
-                // binding.tvResult.text = ""
-            }
+                if (isFirstNumberAndNegative) {
+                    binding.tvResult.text = "-"
+                } else {
+                    // in all other cases let's just clear the text view -)
+                    // binding.tvResult.text = ""
+                }
         }
 
         fun makeAnim(btn: Button) {
@@ -319,21 +333,26 @@ class MainActivity : AppCompatActivity() {
             changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
             makeAnim(btnadd!!)
             changeBtColor(btnadd!!)
+            btnprev = v as Button
         }
         btnsub!!.setOnClickListener { v -> operationSelected(v as Button)
             changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
-            makeAnim(btnsub!!)
-            changeBtColor(btnsub!!)
+                makeAnim(btnsub!!)
+                changeBtColor(btnsub!!)
+                btnprev = v as Button
+
         }
         btnmul!!.setOnClickListener { v -> operationSelected(v as Button)
             changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
             makeAnim(btnmul!!)
             changeBtColor(btnmul!!)
+            btnprev = v as Button
         }
         btndiv!!.setOnClickListener { v -> operationSelected(v as Button)
             changeBtColorBack(btnadd!!,btnsub!!,btndiv!!,btnmul!!)
             makeAnim(btndiv!!)
             changeBtColor(btndiv!!)
+            btnprev = v as Button
         }
     }
 }

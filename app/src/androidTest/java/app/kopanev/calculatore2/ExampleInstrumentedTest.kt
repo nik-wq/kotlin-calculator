@@ -1,4 +1,4 @@
-package com.example.calculatore2
+package app.kopanev.calculatore2
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
